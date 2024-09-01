@@ -1,0 +1,58 @@
+import java.util.*;
+public class Main{
+    static int removeDuplicates(int[] arr){
+        HashSet<Integer> set = new HashSet<>();
+        for(int i=0;i<arr.length;i++){
+            set.add(arr[i]);
+        }
+        int k = set.size();
+        int j =0;
+        for(int x : set){
+            arr[j] = x;
+            j++;
+        }
+        return k;
+    }
+   
+    static int findDuplicates(int[] arr){
+        HashSet<Integer> set2 = new HashSet<>();
+        for(int i=0;i<arr.length;i++){
+            if(set2.contains(arr[i])){
+                return arr[i];
+            }
+            else{
+                set2.add(arr[i]);
+            }
+        }
+        return -1;
+    }
+   static List<Integer> findAllDuplicates(int[] arr) {
+        HashSet<Integer> seen = new HashSet<>();
+        HashSet<Integer> duplicates = new HashSet<>();
+        
+        for (int num : arr) {
+            if (seen.contains(num)) {
+                duplicates.add(num);
+            } else {
+                seen.add(num);
+            }
+        }
+        
+        // Convert HashSet to List to return all duplicates
+        return new ArrayList<>(duplicates);
+    }
+    public static void main(String[] args){
+       int arr[] = {1,2,3,3,4,4,5,5};
+      int res = removeDuplicates(arr);
+      for(int i=0;i<res;i++){
+          System.out.print(arr[i] + " ");
+      }
+      System.out.println();
+       int result = findDuplicates(arr);
+       System.out.println(result);
+       List<Integer> result1 = findAllDuplicates(arr);
+       System.out.println(result1);
+       
+    }
+}
+ 

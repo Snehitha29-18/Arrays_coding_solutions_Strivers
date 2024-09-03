@@ -1,0 +1,90 @@
+public class Main {
+
+    static int[] twoSumBruteForce(int[] nums, int target) {
+        for (int i = 0; i < nums.length; i++) {
+            for (int j = i + 1; j < nums.length; j++) {
+                if (nums[i] + nums[j] == target) {
+                    return new int[]{i, j};
+                }
+            }
+        }
+        return new int[]{-1, -1}; // Return this if no solution is found
+    }
+
+    public static void main(String[] args) {
+        int[] nums = {2, 7, 11, 15};
+        int target = 9;
+        int[] result = twoSumBruteForce(nums, target);
+        System.out.println("Indices: " + result[0] + ", " + result[1]);
+    }
+}
+
+
+import java.util.HashMap;
+
+public class Main {
+
+    static int[] twoSumHashMap(int[] nums, int target) {
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            int complement = target - nums[i];
+            if (map.containsKey(complement)) {
+                return new int[]{map.get(complement), i};
+            }
+            map.put(nums[i], i);
+        }
+        return new int[]{-1, -1}; // Return this if no solution is found
+    }
+
+    public static void main(String[] args) {
+        int[] nums = {2, 7, 11, 15};
+        int target = 9;
+        int[] result = twoSumHashMap(nums, target);
+        System.out.println("Indices: " + result[0] + ", " + result[1]);
+    }
+}
+
+
+import java.util.Arrays;
+
+public class Main {
+
+    static int[] twoSumTwoPointers(int[] nums, int target) {
+        int[] original = Arrays.copyOf(nums, nums.length);
+        Arrays.sort(nums); // Sort the array for the two-pointer technique
+
+        int left = 0;
+        int right = nums.length - 1;
+
+        while (left < right) {
+            int sum = nums[left] + nums[right];
+            if (sum == target) {
+                int leftIndex = findIndex(original, nums[left], -1);
+                int rightIndex = findIndex(original, nums[right], leftIndex);
+                return new int[]{leftIndex, rightIndex};
+            } else if (sum < target) {
+                left++;
+            } else {
+                right--;
+            }
+        }
+        return new int[]{-1, -1}; // Return this if no solution is found
+    }
+
+    // Utility method to find the index of a value in an array
+    static int findIndex(int[] nums, int value, int excludeIndex) {
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] == value && i != excludeIndex) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public static void main(String[] args) {
+        int[] nums = {2, 7, 11, 15};
+        int target = 9;
+        int[] result = twoSumTwoPointers(nums, target);
+        System.out.println("Indices: " + result[0] + ", " + result[1]);
+    }
+}

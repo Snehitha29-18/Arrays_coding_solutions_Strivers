@@ -49,8 +49,7 @@ import java.util.Arrays;
 
 public class Main {
 
-    static int[] twoSumTwoPointers(int[] nums, int target) {
-        int[] original = Arrays.copyOf(nums, nums.length);
+    static boolean twoSumTwoPointers(int[] nums, int target) {
         Arrays.sort(nums); // Sort the array for the two-pointer technique
 
         int left = 0;
@@ -59,32 +58,20 @@ public class Main {
         while (left < right) {
             int sum = nums[left] + nums[right];
             if (sum == target) {
-                int leftIndex = findIndex(original, nums[left], -1);
-                int rightIndex = findIndex(original, nums[right], leftIndex);
-                return new int[]{leftIndex, rightIndex};
+                return true; // Return true if a valid pair is found
             } else if (sum < target) {
                 left++;
             } else {
                 right--;
             }
         }
-        return new int[]{-1, -1}; // Return this if no solution is found
-    }
-
-    // Utility method to find the index of a value in an array
-    static int findIndex(int[] nums, int value, int excludeIndex) {
-        for (int i = 0; i < nums.length; i++) {
-            if (nums[i] == value && i != excludeIndex) {
-                return i;
-            }
-        }
-        return -1;
+        return false; // Return false if no valid pair is found
     }
 
     public static void main(String[] args) {
         int[] nums = {2, 7, 11, 15};
         int target = 9;
-        int[] result = twoSumTwoPointers(nums, target);
-        System.out.println("Indices: " + result[0] + ", " + result[1]);
+        boolean result = twoSumTwoPointers(nums, target);
+        System.out.println("Pair found: " + result); // This will print true or false
     }
 }
